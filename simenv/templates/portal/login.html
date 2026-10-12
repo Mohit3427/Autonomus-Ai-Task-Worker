@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block title %}Sign in{% endblock %}
+{% block content %}
+<h1>Customer sign in</h1>
+<p class="muted">Access invoices and statements published by your suppliers.</p>
+{% if error %}<div class="error" role="alert">{{ error }}</div>{% endif %}
+<form method="post" action="/login" style="max-width:340px">
+  <input type="hidden" name="next" value="{{ next }}">
+  <p><label for="email">Email address</label><input id="email" name="email" type="email" style="width:100%"></p>
+  <p><label for="password">Password</label><input id="password" name="password" type="password" style="width:100%"></p>
+  <button type="submit">Sign in</button>
+</form>
+{% endblock %}

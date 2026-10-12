@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% block title %}{{ bill.ref }}{% endblock %}
+{% block content %}
+<p><a href="/bills">&larr; All bills</a></p>
+<h1>{{ bill.ref }} <span class="status {{ bill.status }}">{{ bill.status }}</span></h1>
+<div class="card">
+<dl>
+  <dt>Vendor</dt><dd>{{ vendor.name }} ({{ vendor.id }})</dd>
+  <dt>Vendor invoice #</dt><dd>{{ bill.invoice_number }}</dd>
+  <dt>Invoice date</dt><dd>{{ bill.invoice_date.isoformat() }}</dd>
+  <dt>Due date</dt><dd>{{ bill.due_date.isoformat() }}</dd>
+  <dt>Amount</dt><dd>{{ "{:,.2f}".format(bill.amount) }} {{ bill.currency }}</dd>
+  <dt>Memo</dt><dd>{{ bill.memo or "—" }}</dd>
+  <dt>Entered by</dt><dd>{{ bill.created_by }}</dd>
+</dl>
+</div>
+{% if bill.status == "Entered" %}
+<div class="card" style="display:flex;gap:10px">
+  <form method="post" action="/bills/{{ bill.id }}/approve"><button type="submit" class="warn">Approve for payment</button></form>
+  <form method="post" action="/bills/{{ bill.id }}/delete"><button type="submit" class="danger">Delete bill</button></form>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Task Worker</title>
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="logo">◆</span> Autonomous AI Task Worker</div>
+  <div class="meta" id="meta"></div>
+</header>
+
+<div class="layout">
+  <!-- Left: task entry + history -->
+  <aside class="panel left">
+    <section>
+      <h2>New task</h2>
+      <textarea id="task" rows="5" placeholder="Describe the outcome you want, e.g. 'Find the latest invoice from Acme Supplies and enter it into our internal system.'"></textarea>
+      <div class="examples" id="examples"></div>
+      <div class="options">
+        <label>Autonomy
+          <select id="autonomy">
+            <option value="autonomous">Autonomous: approval only for payments / deletes</option>
+            <option value="supervised">Supervised: approve every submit</option>
+          </select>
+        </label>
+        <label class="check"><input type="checkbox" id="verify" checked> Independent verification</label>
+        <label class="check"><input type="checkbox" id="reset" checked> Reset sim environment first</label>
+        <label class="check"><input type="checkbox" id="chaos"> Chaos mode (inject failures)</label>
+      </div>
+      <div class="row">
+        <button id="runBtn" class="primary">Run task</button>
+        <button id="cancelBtn" class="ghost" hidden>Stop</button>
+      </div>
+    </section>
+    <section>
+      <h2>History</h2>
+      <ul id="history" class="history"></ul>
+    </section>
+  </aside>
+
+  <!-- Center: live trace -->
+  <main class="panel center">
+    <div id="empty" class="empty">
+      <h1>Give the worker a goal, not a script.</h1>
+      <p>It plans, operates the company apps in a real browser, recovers from failures, asks when it must,
+        and an independent verifier checks the real systems before anything is reported as done.</p>
+    </div>
+    <div id="runView" hidden>
+      <div class="runhead">
+        <div class="runtask" id="runTask"></div>
+        <div class="runstatus"><span id="statusPill" class="pill">running</span><span id="stats" class="stats"></span></div>
+      </div>
+      <div id="pending" class="pending"></div>
+      <div class="plan" id="planBox" hidden><h3>Plan</h3><ol id="plan"></ol></div>
+      <div id="timeline" class="timeline"></div>
+    </div>
+  </main>
+
+  <!-- Right: browser view, memory, report -->
+  <aside class="panel right">
+    <section>
+      <h2>Live browser <span id="shotUrl" class="muted small"></span></h2>
+      <div class="screen" id="screen"><span class="muted">No browser activity yet</span></div>
+    </section>
+    <section>
+      <h2>Working memory</h2>
+      <dl id="memory" class="memory"><span class="muted">Nothing remembered yet</span></dl>
+    </section>
+    <section id="reportBox" hidden>
+      <h2>Result</h2>
+      <div id="report"></div>
+    </section>
+  </aside>
+</div>
+
+<div id="lightbox" class="lightbox" hidden><img id="lightboxImg" alt=""></div>
+<script src="/static/app.js"></script>
+</body>
+</html>

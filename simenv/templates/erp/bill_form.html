@@ -1,0 +1,27 @@
+{% extends "base.html" %}{% block title %}Enter bill{% endblock %}
+{% block content %}
+<h1>Enter vendor bill</h1>
+<div class="card">
+{% if errors %}<div class="alert" role="alert">Please correct the {{ errors|length }} error(s) below. The bill was not saved.</div>{% endif %}
+<form method="post" action="/bills/new">
+  <div class="field"><label for="vendor_id">Vendor</label>
+    <select id="vendor_id" name="vendor_id"><option value="">-- select vendor --</option>
+      {% for v in vendors %}<option value="{{ v.id }}" {% if form.get('vendor_id') == v.id %}selected{% endif %}>{{ v.name }} ({{ v.id }})</option>{% endfor %}</select>
+    {% if errors.vendor_id %}<div class="err">{{ errors.vendor_id }}</div>{% endif %}
+    <div class="hint">Vendor not listed? New vendors must be created by the Vendor Master team.</div></div>
+  <div class="field"><label for="invoice_number">Vendor invoice number</label><input id="invoice_number" name="invoice_number" value="{{ form.get('invoice_number','') }}">
+    {% if errors.invoice_number %}<div class="err">{{ errors.invoice_number }}</div>{% endif %}</div>
+  <div class="field"><label for="invoice_date">Invoice date</label><input id="invoice_date" name="invoice_date" placeholder="YYYY-MM-DD" value="{{ form.get('invoice_date','') }}">
+    {% if errors.invoice_date %}<div class="err">{{ errors.invoice_date }}</div>{% endif %}</div>
+  <div class="field"><label for="due_date">Due date</label><input id="due_date" name="due_date" placeholder="YYYY-MM-DD" value="{{ form.get('due_date','') }}">
+    {% if errors.due_date %}<div class="err">{{ errors.due_date }}</div>{% endif %}</div>
+  <div class="field"><label for="amount">Amount (total incl. tax)</label><input id="amount" name="amount" placeholder="0.00" value="{{ form.get('amount','') }}">
+    {% if errors.amount %}<div class="err">{{ errors.amount }}</div>{% endif %}</div>
+  <div class="field"><label for="currency">Currency</label>
+    <select id="currency" name="currency">{% for c in currencies %}<option {% if form.get('currency','USD') == c %}selected{% endif %}>{{ c }}</option>{% endfor %}</select></div>
+  <div class="field"><label for="memo">Memo</label><input id="memo" name="memo" value="{{ form.get('memo','') }}"></div>
+  <button type="submit">Save bill</button>
+  <a class="btn secondary" href="/bills">Cancel</a>
+</form>
+</div>
+{% endblock %}

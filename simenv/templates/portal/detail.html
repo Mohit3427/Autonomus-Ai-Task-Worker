@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block title %}{{ doc.number }}{% endblock %}
+{% block content %}
+<p><a href="/documents">&larr; Back to documents</a></p>
+<h1>{{ doc.doc_type }} {{ doc.number }}</h1>
+<dl>
+  <dt>Supplier</dt><dd>{{ doc.vendor }}</dd>
+  <dt>Document type</dt><dd>{{ doc.doc_type }}</dd>
+  <dt>Issue date</dt><dd>{{ doc.issue_date.strftime("%d %b %Y") }}</dd>
+  <dt>Status</dt><dd><span class="badge {{ doc.status }}">{{ doc.status }}</span></dd>
+</dl>
+<p class="muted">Amounts, payment terms and line items are contained in the official document.</p>
+<p><a class="btn" href="/documents/{{ doc.id }}/pdf">Download PDF</a></p>
+{% endblock %}

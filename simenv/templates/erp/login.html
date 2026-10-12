@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block title %}Sign in{% endblock %}
+{% block content %}
+<div class="card" style="max-width:420px;margin:60px auto">
+  <h1 style="margin-top:0">Northwind AP</h1>
+  <p style="color:#5a6b80">Internal accounts payable · authorized staff only</p>
+  {% if notice %}<div class="notice" role="alert">{{ notice }}</div>{% endif %}
+  {% if error %}<div class="alert" role="alert">{{ error }}</div>{% endif %}
+  <form method="post" action="/login">
+    <input type="hidden" name="next" value="{{ next }}">
+    <div class="field"><label for="username">Username</label><input id="username" name="username" autocomplete="off"></div>
+    <div class="field"><label for="password">Password</label><input id="password" name="password" type="password"></div>
+    <button type="submit">Log in</button>
+  </form>
+</div>
+{% endblock %}

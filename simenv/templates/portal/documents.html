@@ -1,0 +1,36 @@
+{% extends "base.html" %}{% block title %}Documents{% endblock %}
+{% block content %}
+<h1>Billing documents</h1>
+<form class="filters" method="get" action="/documents">
+  <div><label for="vendor">Supplier</label>
+    <select id="vendor" name="vendor"><option value="">All suppliers</option>
+      {% for v in vendors %}<option value="{{ v }}" {% if v == vendor %}selected{% endif %}>{{ v }}</option>{% endfor %}
+    </select></div>
+  <div><label for="doc_type">Document type</label>
+    <select id="doc_type" name="doc_type"><option value="">All types</option>
+      {% for t in ["Invoice", "Credit Note"] %}<option value="{{ t }}" {% if t == doc_type %}selected{% endif %}>{{ t }}</option>{% endfor %}
+    </select></div>
+  <div><label for="sort">Sort by</label>
+    <select id="sort" name="sort">
+      <option value="date_asc" {% if sort == "date_asc" %}selected{% endif %}>Issue date (oldest first)</option>
+      <option value="date_desc" {% if sort == "date_desc" %}selected{% endif %}>Issue date (newest first)</option>
+    </select></div>
+  <button type="submit">Apply filters</button>
+</form>
+<p class="muted">{{ total }} document(s)</p>
+<table>
+  <thead><tr><th>Document #</th><th>Supplier</th><th>Type</th><th>Issue date</th><th>Status</th></tr></thead>
+  <tbody>
+  {% for d in docs %}
+    <tr><td><a href="/documents/{{ d.id }}">{{ d.number }}</a></td><td>{{ d.vendor }}</td><td>{{ d.doc_type }}</td>
+        <td>{{ d.issue_date.strftime("%d %b %Y") }}</td><td><span class="badge {{ d.status }}">{{ d.status }}</span></td></tr>
+  {% else %}<tr><td colspan="5">No documents match your filters.</td></tr>{% endfor %}
+  </tbody>
+</table>
+<div class="pager">
+  {% set qs = "vendor=" ~ (vendor|urlencode) ~ "&doc_type=" ~ (doc_type|urlencode) ~ "&sort=" ~ sort %}
+  {% if page > 1 %}<a href="/documents?{{ qs }}&page={{ page - 1 }}">&larr; Previous page</a>{% endif %}
+  <span>Page {{ page }} of {{ pages }}</span>
+  {% if page < pages %}<a href="/documents?{{ qs }}&page={{ page + 1 }}">Next page &rarr;</a>{% endif %}
+</div>
+{% endblock %}

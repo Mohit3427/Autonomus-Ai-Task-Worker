@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{% block title %}Northwind AP{% endblock %} · Northwind AP</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; margin: 0; background: #eef1f5; color: #1d2733; display: flex; min-height: 100vh; }
+  aside { width: 210px; background: #13294b; color: #c9d6ea; padding: 20px 0; flex-shrink: 0; }
+  aside .brand { color: #fff; font-weight: 700; font-size: 18px; padding: 0 20px 18px; }
+  aside a { display: block; color: #c9d6ea; text-decoration: none; padding: 9px 20px; }
+  aside a:hover { background: #1c3a66; color: #fff; }
+  .content { flex: 1; padding: 26px 34px; }
+  .topbar { display: flex; justify-content: space-between; color: #5a6b80; font-size: 13px; margin-bottom: 16px; }
+  .card { background: #fff; border-radius: 6px; box-shadow: 0 1px 2px rgba(0,0,0,.08); padding: 20px 24px; margin-bottom: 18px; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid #e6eaf0; font-size: 14px; }
+  th { color: #5a6b80; font-weight: 600; font-size: 12px; text-transform: uppercase; }
+  .status { padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+  .status.Entered { background: #e6eefc; color: #1d4ed8; } .status.Approved { background: #fff4d6; color: #92580b; } .status.Paid { background: #dcf5e3; color: #17663a; }
+  .flash { background: #dcf5e3; border: 1px solid #a6dfb8; color: #17663a; padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; }
+  .alert { background: #fde8e8; border: 1px solid #f4b4b4; color: #9b1c1c; padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; }
+  .notice { background: #fff4d6; border: 1px solid #f1d38a; color: #7a4d0b; padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; }
+  .field { margin-bottom: 14px; } .field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .field input, .field select, .field textarea { width: 360px; padding: 7px 9px; border: 1px solid #c4ccd8; border-radius: 4px; font-size: 14px; }
+  .field .err { color: #b91c1c; font-size: 12px; margin-top: 3px; }
+  .field .hint { color: #6b7a8c; font-size: 12px; margin-top: 3px; }
+  button, .btn { background: #1d4ed8; color: #fff; border: 0; border-radius: 4px; padding: 8px 16px; font-size: 14px; cursor: pointer; text-decoration: none; display: inline-block; }
+  .btn.secondary { background: #e2e8f0; color: #1d2733; } .btn.danger, button.danger { background: #b91c1c; } button.warn { background: #b45309; }
+  .kpis { display: flex; gap: 16px; } .kpi { flex: 1; } .kpi .v { font-size: 26px; font-weight: 700; }
+  .overlay { position: fixed; inset: 0; background: rgba(10,20,40,.55); display: flex; align-items: center; justify-content: center; z-index: 50; }
+  .modal { background: #fff; border-radius: 8px; padding: 26px 30px; width: 440px; }
+  dl { display: grid; grid-template-columns: 170px 1fr; gap: 8px 14px; } dt { color: #5a6b80; }
+</style>
+</head>
+<body>
+{% if user %}
+<aside>
+  <div class="brand">Northwind AP</div>
+  <a href="/dashboard">Dashboard</a>
+  <a href="/bills">Bills</a>
+  <a href="/bills/new">Enter bill</a>
+  <a href="/vendors">Vendors</a>
+  <a href="/logout">Sign out</a>
+</aside>
+{% endif %}
+<div class="content">
+  {% if user %}<div class="topbar"><span>Accounts Payable · FY2026</span><span>Signed in as {{ user }} · {{ today.isoformat() }}</span></div>{% endif %}
+  {% if flash %}<div class="flash" role="status">{{ flash }}</div>{% endif %}
+  {% block content %}{% endblock %}
+</div>
+{% if modal %}
+<div class="overlay" id="whats-new">
+  <div class="modal" role="dialog" aria-label="What's new">
+    <h2>What's new in Northwind AP 4.2</h2>
+    <p>Bulk export for bills, faster vendor search and a refreshed dashboard. Take the tour to learn more.</p>
+    <a class="btn" href="/dismiss-whats-new?next={{ request.url.path }}">Dismiss</a>
+  </div>
+</div>
+{% endif %}
+</body>
+</html>

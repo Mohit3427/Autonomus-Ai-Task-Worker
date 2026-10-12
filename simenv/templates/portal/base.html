@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{% block title %}SupplyHub{% endblock %} · SupplyHub</title>
+<style>
+  body { font-family: Georgia, "Times New Roman", serif; margin: 0; background: #f6f3ee; color: #2b2b2b; }
+  header { background: #7a3e12; color: #fff; padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; }
+  header a { color: #ffe9d6; margin-left: 16px; }
+  .brand { font-size: 22px; font-weight: bold; letter-spacing: .5px; }
+  main { max-width: 1000px; margin: 28px auto; background: #fff; padding: 24px 32px; border: 1px solid #e3dccf; }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #eee5d8; }
+  th { background: #faf5ee; }
+  .badge { padding: 2px 8px; border-radius: 10px; font-size: 12px; background: #eee; }
+  .badge.Open { background: #fff1c2; } .badge.Paid { background: #d8f0d4; } .badge.Applied { background: #dde7f7; }
+  .error { background: #fde2e1; color: #8a1c1c; padding: 10px 14px; border: 1px solid #f5b5b2; margin-bottom: 14px; }
+  form.filters { display: flex; gap: 12px; align-items: end; flex-wrap: wrap; }
+  label { display: block; font-size: 13px; color: #555; }
+  input, select { padding: 6px 8px; font-size: 14px; }
+  button, .btn { background: #7a3e12; color: #fff; border: 0; padding: 8px 14px; cursor: pointer; text-decoration: none; display: inline-block; }
+  .pager { margin-top: 14px; display: flex; gap: 10px; align-items: center; }
+  .muted { color: #777; font-size: 13px; }
+  dl { display: grid; grid-template-columns: 180px 1fr; gap: 6px 12px; }
+  dt { color: #666; }
+</style>
+</head>
+<body>
+<header>
+  <span class="brand">SupplyHub</span>
+  <nav>{% if user %}<span>{{ user }}</span><a href="/documents">Documents</a><a href="/logout">Sign out</a>{% endif %}</nav>
+</header>
+<main>{% block content %}{% endblock %}</main>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Vendors{% endblock %}
+{% block content %}
+<h1>Vendor master</h1>
+<div class="card"><table><thead><tr><th>ID</th><th>Name</th><th>Currency</th><th>Terms</th></tr></thead><tbody>
+{% for v in vendors %}<tr><td>{{ v.id }}</td><td>{{ v.name }}</td><td>{{ v.default_currency }}</td><td>{{ v.payment_terms }}</td></tr>{% endfor %}
+</tbody></table>
+<p style="color:#5a6b80;font-size:13px">To add a vendor, raise a request with the Vendor Master team.</p></div>
+{% endblock %}

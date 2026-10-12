@@ -1,0 +1,51 @@
+{
+  "organization": "Northwind Traders Inc.",
+  "operator": "Accounts Payable team",
+  "apps": [
+    {
+      "name": "SupplyHub",
+      "url": "http://localhost:8101",
+      "description": "Third-party vendor billing portal. Our suppliers publish invoices and credit notes here. Documents list at /documents (filterable by supplier and type, sortable by date); each document page has a PDF download containing the amounts, payment terms and due date.",
+      "auth": "Web login form. Secrets: supplyhub.email, supplyhub.password"
+    },
+    {
+      "name": "Northwind AP",
+      "url": "http://localhost:8102",
+      "description": "Our internal accounts-payable system (the 'internal system' / ERP). Staff enter vendor bills via the web UI (Enter bill form at /bills/new), browse bills at /bills and the vendor master at /vendors. Bills can be approved for payment from the bill page. A read-only reporting REST API is also available: GET /api/vendors, GET /api/bills?vendor_id=&invoice_number=&status=, GET /api/bills/{id}.",
+      "auth": "Web login form. Secrets: erp.username, erp.password. API: header 'Authorization: Bearer {{secret:erp.api_token}}'"
+    }
+  ],
+  "secrets": {
+    "supplyhub.email": "ap@northwind.example",
+    "supplyhub.password": "portal-pass-2026",
+    "erp.username": "jdoe",
+    "erp.password": "erp-pass-2026",
+    "erp.api_token": "nw-api-7f3a9c"
+  },
+  "example_tasks": [
+    {
+      "label": "Invoice → ERP (canonical)",
+      "task": "Find the latest invoice from Acme Supplies, extract the amount and due date, enter it into our internal system, and tell me once it is done."
+    },
+    {
+      "label": "Ambiguous vendor",
+      "task": "Find the latest invoice from Acme and enter it into our internal system."
+    },
+    {
+      "label": "Vendor missing from ERP",
+      "task": "Enter the latest invoice from Umbrella Facilities into Northwind AP."
+    },
+    {
+      "label": "Overdue report (read + files)",
+      "task": "Which bills in our AP system are overdue and not yet paid? Write a CSV report named overdue_bills.csv with bill ref, vendor, invoice number, due date, amount and days overdue, and summarize it for me."
+    },
+    {
+      "label": "Approval-gated action",
+      "task": "Approve bill BILL-1006 for payment."
+    },
+    {
+      "label": "Reconcile portal vs ERP",
+      "task": "Check which open invoices on SupplyHub from vendors in our vendor master have not been entered into Northwind AP yet, and enter the missing ones."
+    }
+  ]
+}

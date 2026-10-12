@@ -1,0 +1,23 @@
+{% extends "base.html" %}{% block title %}Bills{% endblock %}
+{% block content %}
+<h1>Bills</h1>
+<div class="card">
+<form method="get" action="/bills" style="display:flex;gap:12px;align-items:end;margin-bottom:14px">
+  <div class="field" style="margin:0"><label for="vendor_id">Vendor</label>
+    <select id="vendor_id" name="vendor_id" style="width:220px"><option value="">All vendors</option>
+      {% for vid, v in vendors.items() %}<option value="{{ vid }}" {% if vid == vendor_id %}selected{% endif %}>{{ v.name }}</option>{% endfor %}</select></div>
+  <div class="field" style="margin:0"><label for="status">Status</label>
+    <select id="status" name="status" style="width:150px"><option value="">Any</option>
+      {% for s in ["Entered","Approved","Paid"] %}<option {% if s == status %}selected{% endif %}>{{ s }}</option>{% endfor %}</select></div>
+  <div class="field" style="margin:0"><label for="q">Search invoice # / memo</label><input id="q" name="q" value="{{ q }}" style="width:200px"></div>
+  <button type="submit">Search</button>
+</form>
+<table><thead><tr><th>Bill</th><th>Vendor</th><th>Invoice #</th><th>Invoice date</th><th>Due date</th><th>Amount</th><th>Status</th></tr></thead><tbody>
+{% for b in bills %}
+  <tr><td><a href="/bills/{{ b.id }}">{{ b.ref }}</a></td><td>{{ vendors[b.vendor_id].name }}</td><td>{{ b.invoice_number }}</td>
+      <td>{{ b.invoice_date.isoformat() }}</td><td>{{ b.due_date.isoformat() }}{% if b.status != "Paid" and b.due_date < today %} <strong style="color:#b91c1c">OVERDUE</strong>{% endif %}</td>
+      <td>{{ "{:,.2f}".format(b.amount) }} {{ b.currency }}</td><td><span class="status {{ b.status }}">{{ b.status }}</span></td></tr>
+{% else %}<tr><td colspan="7">No bills found.</td></tr>{% endfor %}
+</tbody></table>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+<div class="kpis">
+  <div class="card kpi"><div>Open bills</div><div class="v">{{ open_count }}</div></div>
+  <div class="card kpi"><div>Overdue</div><div class="v">{{ overdue_count }}</div></div>
+  <div class="card kpi"><div>Open balance (USD)</div><div class="v">{{ "{:,.2f}".format(open_total) }}</div></div>
+</div>
+<div class="card">
+  <h2 style="margin-top:0">Recently entered</h2>
+  <table><thead><tr><th>Bill</th><th>Vendor</th><th>Invoice #</th><th>Amount</th><th>Status</th></tr></thead><tbody>
+  {% for b in recent %}<tr><td><a href="/bills/{{ b.id }}">{{ b.ref }}</a></td><td>{{ vendors[b.vendor_id].name }}</td><td>{{ b.invoice_number }}</td><td>{{ "{:,.2f}".format(b.amount) }} {{ b.currency }}</td><td><span class="status {{ b.status }}">{{ b.status }}</span></td></tr>{% endfor %}
+  </tbody></table>
+  <p><a class="btn" href="/bills/new">Enter a new bill</a></p>
+</div>
+{% endblock %}
