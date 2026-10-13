@@ -334,11 +334,3 @@ so every behaviour is visible and explainable.
 6. **More channels.** Accept tasks from email or Slack and send approval requests there.
 7. **Larger eval suite.** Many more scenarios and repeated trials to measure success rate,
    cost and turns per task type, and to tune effort level per phase (e.g. a low-effort verifier).
-
-## Demo video
-
-_Link: add after recording._ Suggested script:
-1. Run the canonical task with `HEADLESS=false` and chaos on.
-2. Run the ambiguous "Acme" task and answer the question.
-3. Run "Approve BILL-1006" and deny it.
-4. Run the overdue report.
